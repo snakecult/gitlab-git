@@ -1,0 +1,15 @@
+[Unit]
+Description=Gitlab
+Requires=redis.service
+After=redis.service
+
+[Service]
+Type=simple
+PIDFile=/srv/git/gitlab/tmp/pids/server.pid
+ExecStart=/usr/bin/bundle exec rails s -e production
+User=git
+WorkingDirectory=/srv/git/gitlab
+TimeoutStartSec=600
+
+[Install]
+WantedBy=multi-user.target
