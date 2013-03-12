@@ -5,11 +5,11 @@ After=redis.service
 
 [Service]
 Type=forking
-PIDFile=/srv/git/gitlab/tmp/pids/sidekiq.pid
+PIDFile=/home/git/gitlab/tmp/pids/sidekiq.pid
 ExecStart=/usr/bin/bundle exec rake sidekiq:start RAILS_ENV=production
 ExecStop=/usr/bin/bundle exec rake sidekiq:stop RAILS_ENV=production
 User=git
-WorkingDirectory=/srv/git/gitlab
+WorkingDirectory=/home/git/gitlab
 TimeoutStartSec=600
 
 [Install]
