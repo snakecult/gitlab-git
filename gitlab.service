@@ -2,7 +2,7 @@
 Description=Gitlab: Self Hosted Git Management Application
 Requires=redis.service sidekiq.service
 After=redis.service sidekiq.service
-
+ 
 [Service]
 Type=forking
 PIDFile=/home/git/gitlab/tmp/pids/server.pid

@@ -2,7 +2,7 @@
 Description=Sidekiq
 Requires=redis.service
 After=redis.service
-
+ 
 [Service]
 Type=forking
 PIDFile=/home/git/gitlab/tmp/pids/sidekiq.pid

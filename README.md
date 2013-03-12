@@ -5,7 +5,7 @@
     pacman -S gitlab
     Edit /home/git/gitlab/config/config.yml
     Edit /home/git/gitlab/config/database.yml (default is postgres, use database.yml.mysql for mysql)
-
+ 
 # Initialize Database
 
     sudo -u git -H bundle exec rake db:setup RAILS_ENV=production

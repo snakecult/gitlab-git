@@ -6,7 +6,7 @@ pkgdesc="Gitorious aims to provide a great way of doing distributed opensource c
 arch=(i686 x86_64)
 url="http://gitorious.org/gitorious"
 license=('AGPLv3')
-
+ 
 depends=('ruby-bundler' 'gitlab-shell')
 makedepends=('git' 'postgresql-libs' 'libmysqlclient')
 optdepends=(
