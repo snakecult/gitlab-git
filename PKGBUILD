@@ -26,11 +26,11 @@ build() {
 }
 
 package() {
-	pwd
-	install -vdD "$pkgdir/home/gitlab"	
-	cp -r "$srcdir/gitlab" "$pkgdir/home/git/gitlab"	
-	cp "$srcdir/gitlab/config/database.yml.postgressql" "$pkgdir/gitlab/config/database.yml"
-	cp "$srcdir/gitlab/config/config.yml.example" "$pkgdir/gitlab/config/config.yml"
+    pwd
+    install -vdD "$pkgdir/home/gitlab"
+    cp -r "$srcdir/gitlab" "$pkgdir/home/git/gitlab"
+    cp "$srcdir/gitlab/config/database.yml.postgressql" "$pkgdir/home/git/gitlab/config/database.yml"
+    cp "$srcdir/gitlab/config/config.yml.example" "$pkgdir/home/git/gitlab/config/config.yml"
     install -m0644 -o root -u root "$startdir/gitlab.service" "$pkgdir/usr/lib/systemd/system"
     install -m0644 -o root -u root "$startdir/sidekiq.service" "$pkgdir/usr/lib/systemd/system"
 }
