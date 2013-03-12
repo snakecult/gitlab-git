@@ -1,14 +1,14 @@
 [Unit]
-Description=Gitlab
-Requires=redis.service
-After=redis.service
+Description=Gitlab: Self Hosted Git Management Application
+Requires=redis.service sidekiq.service
+After=redis.service sidekiq.service
 
 [Service]
-Type=simple
-PIDFile=/srv/git/gitlab/tmp/pids/server.pid
+Type=forking
+PIDFile=/home/git/gitlab/tmp/pids/server.pid
 ExecStart=/usr/bin/bundle exec rails s -e production
 User=git
-WorkingDirectory=/srv/git/gitlab
+WorkingDirectory=/home/git/gitlab
 TimeoutStartSec=600
 
 [Install]
