@@ -14,8 +14,8 @@ optdepends=(
 	'postgres'
 	'mysql'	)
 
-_gitroot="git://gitorious.org/gitorious/mainline.git"
-_gitname="gitorious"
+backup=('home/git/gitlab/config/gitlab.yml'
+        'home/git/gitlab/config/database.yml')
 
 build() {
 	if [ ! -d "gitlab" ] 
@@ -29,5 +29,7 @@ build() {
 package() {
 	pwd
 	install -vdD "$pkgdir/home/gitlab"	
-	cp -r "$srcdir/gitlab" "$pkgdir/home/gitlab"	
+	cp -r "$srcdir/gitlab" "$pkgdir/home/git/gitlab"	
+	cp "$srcdir/gitlab/config/database.yml.postgressql" "$pkgdir/gitlab/config/database.yml"
+	cp "$srcdir/gitlab/config/config.yml.example" "$pkgdir/gitlab/config/config.yml"
 }
