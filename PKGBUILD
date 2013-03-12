@@ -18,14 +18,16 @@ _gitroot="git://gitorious.org/gitorious/mainline.git"
 _gitname="gitorious"
 
 build() {
-	if [ ! -d "gitlabhq" ] 
+	if [ ! -d "gitlab" ] 
 	then
-		git clone https://github.com/gitlabhq/gitlabhq.git
+		git clone https://github.com/gitlabhq/gitlabhq.git gitlab
 	fi
-	cd gitlabhq
+	cd gitlab
 	bundle install --without development test --deployment
 }
 
 package() {
-	echo x
+	pwd
+	install -vdD "$pkgdir/home/gitlab"	
+	cp -r "$srcdir/gitlab" "$pkgdir/home/gitlab"	
 }
