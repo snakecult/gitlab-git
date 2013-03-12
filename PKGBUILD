@@ -1,5 +1,4 @@
-# Maintainer: Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
-
+# Maintainer: David Andersen <arch@davidandersen.us>
 pkgname=gitlab-git
 pkgver=20130311
 pkgrel=1
@@ -8,8 +7,8 @@ arch=(i686 x86_64)
 url="http://gitorious.org/gitorious"
 license=('AGPLv3')
 
-depends=('ruby-bundler')
-makedepends=('git' 'postgresql-libs' 'libmysqlclient' )
+depends=('ruby-bundler' 'gitlab-shell')
+makedepends=('git' 'postgresql-libs' 'libmysqlclient')
 optdepends=(
 	'postgres'
 	'mysql'	)
@@ -32,4 +31,6 @@ package() {
 	cp -r "$srcdir/gitlab" "$pkgdir/home/git/gitlab"	
 	cp "$srcdir/gitlab/config/database.yml.postgressql" "$pkgdir/gitlab/config/database.yml"
 	cp "$srcdir/gitlab/config/config.yml.example" "$pkgdir/gitlab/config/config.yml"
+    install -m0644 -o root -u root "$startdir/gitlab.service" "$pkgdir/usr/lib/systemd/system"
+    install -m0644 -o root -u root "$startdir/sidekiq.service" "$pkgdir/usr/lib/systemd/system"
 }
