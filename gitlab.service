@@ -1,6 +1,6 @@
 [Unit]
 Description=Gitlab: Self Hosted Git Management Application
-Requires=redis.service sidekiq.service
+Requires=redis.service sidekiq.service nginx.service
 After=redis.service sidekiq.service
  
 [Service]
