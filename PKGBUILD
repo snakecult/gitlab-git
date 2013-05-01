@@ -1,6 +1,6 @@
 # Maintainer: David Andersen <arch@davidandersen.us>
 pkgname=gitlab-git
-pkgver=5.0.0pre
+pkgver=5.0.0
 pkgrel=1
 pkgdesc="Gitorious aims to provide a great way of doing distributed opensource code collaboration (git version)"
 arch=(i686 x86_64)
@@ -20,10 +20,11 @@ optdepends=(
 backup=('etc/gitlab/gitlab.yml'
         'etc/gitlab/database.yml')
 #options=('!strip')
+_branch=5-0-stable
 build() {
 	if [ ! -d "gitlab" ] 
 	then
-		git clone https://github.com/gitlabhq/gitlabhq.git gitlab --depth=1
+		git clone https://github.com/gitlabhq/gitlabhq.git gitlab --depth=1 -b $branch
 	fi
 	cd gitlab
 	bundle install --without development test --deployment
