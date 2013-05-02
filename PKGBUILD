@@ -1,7 +1,7 @@
 # Maintainer: David Andersen <arch@davidandersen.us>
 pkgname=gitlab-git
 pkgver=5.0.0
-pkgrel=1
+pkgrel=4
 pkgdesc="Gitorious aims to provide a great way of doing distributed opensource code collaboration (git version)"
 arch=(i686 x86_64)
 url="http://gitorious.org/gitorious"
@@ -11,46 +11,55 @@ depends=('ruby-bundler'
          'gitlab-shell'
          'nginx'
          'icu'
+	 'redis'
+	 'libxslt'
+	 'git' 
+	 'postgresql-libs' 
+	 'libmysqlclient'
 )
-makedepends=('git' 'postgresql-libs' 'libmysqlclient')
+#makedepends=('git' 'postgresql-libs' 'libmysqlclient')
 optdepends=(
 	'postgres'
 	'mysql'	)
 
 backup=('etc/gitlab/gitlab.yml'
-        'etc/gitlab/database.yml')
+        'etc/gitlab/database.yml'
+        'etc/nginx/sites-enabled/gitlab.conf'
+)
 #options=('!strip')
 _branch=5-0-stable
 build() {
 	if [ ! -d "gitlab" ] 
 	then
-		git clone https://github.com/gitlabhq/gitlabhq.git gitlab --depth=1 -b $branch
+		git clone https://github.com/gitlabhq/gitlabhq.git gitlab --depth=1 -b "${_branch}"
 	fi
 	cd gitlab
 	bundle install --without development test --deployment
 }
 
-_homedir="$pkgdir/home/git/gitlab"
-_etc="$pkgdir/etc/gitlab"
+_homedir="home/git/gitlab"
+_etc="etc/gitlab"
 
 package() {
     #gitlab
-    mkdir -p "$_homedir"
-    cp -rT "$srcdir/gitlab" "$_homedir"
-    rm -rf "$_homedir/.git"
-    rm  "$_homedir/.gitignore"
-    chown -R git:git "$_homedir"
+    mkdir -p "$pkgdir/$_homedir"
+    mkdir -p "$pkgdir/$_homedir/tmp/pids"
+    mkdir -p "$pkgdir/$_homedir/tmp/sockets"
+    cp -rT "$srcdir/gitlab" "$pkgdir/$_homedir"
+    rm -rf "$pkgdir/$_homedir/.git"
+    rm  "$pkgdir/$_homedir/.gitignore"
+    chown -R git:git "$pkgdir/$_homedir"
 
     #config
-    install -Dm0644 "$srcdir/gitlab/config/database.yml.postgresql" "$_etc/database.yml"
-    install -Dm0644 "$srcdir/gitlab/config/gitlab.yml.example" "$_etc/gitlab.yml"
-    ln -s "/etc/gitlab/database.yml" "$_homedir/config/database.yml"
-    ln -s "/etc/gitlab/config.yml" "$_homedir/config/config.yml"
+    install -Dm0644 "$srcdir/gitlab/config/database.yml.postgresql" "$pkgdir/$_etc/database.yml"
+    install -Dm0644 "$srcdir/gitlab/config/gitlab.yml.example" "$pkgdir/$_etc/gitlab.yml"
+    ln -s "/etc/gitlab/database.yml" "$pkgdir/$_homedir/config/database.yml"
+    ln -s "/etc/gitlab/gitlab.yml" "$pkgdir/$_homedir/config/gitlab.yml"
 
     #systemd
-    install -D -m0644 "$startdir/gitlab.service" "$pkgdir/usr/lib/systemd/system"
-    install -D -m0644 "$startdir/sidekiq.service" "$pkgdir/usr/lib/systemd/system"
+    install -D -m0644 "$startdir/gitlab.service" "$pkgdir/usr/lib/systemd/system/gitlab.service"
+    install -D -m0644 "$startdir/sidekiq.service" "$pkgdir/usr/lib/systemd/system/sidekiq.service"
 
     #nginx
-    install -D -m0644 "$startdir/gitlab.conf" "$pkgdir/etc/nginx/sites-enabled"
+    install -D -m0644 "$startdir/gitlab.conf" "$pkgdir/etc/nginx/sites-enabled/gitlab.conf"
 }

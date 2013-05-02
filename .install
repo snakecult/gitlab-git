@@ -1,5 +1,6 @@
 ## arg 1:  the new package version
 post_install() {
+	echo Updating charlock_holmes gem...
 	rm -rf /home/git/gitlab/vendor/bundle/ruby/1.9.1/gems/charlock_holmes-0.6.9		
 	rm /home/git/gitlab/vendor/bundle/ruby/1.9.1/specifications/charlock_holmes-0.6.9.gemspec
 	cd /home/git/gitlab
