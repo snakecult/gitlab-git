@@ -1,11 +1,12 @@
 [Unit]
-Description=Sidekiq
+Description=Sidekiq: Simple, efficient message processing for Ruby
 Requires=redis.service
 After=redis.service
- 
+
 [Service]
 Type=forking
 PIDFile=/home/git/gitlab/tmp/pids/sidekiq.pid
+ExecStartPre=/usr/bin/rm /home/git/gitlab/tmp/pids/sidekiq.pid
 ExecStart=/usr/bin/bundle exec rake sidekiq:start RAILS_ENV=production
 ExecStop=/usr/bin/bundle exec rake sidekiq:stop RAILS_ENV=production
 User=git

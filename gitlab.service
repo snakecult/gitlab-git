@@ -1,11 +1,12 @@
 [Unit]
-Description=Gitlab: Self Hosted Git Management Application
+Description=GitLab: Self Hosted Git Management Application
 Requires=redis.service sidekiq.service nginx.service
 After=redis.service sidekiq.service
- 
+
 [Service]
-Type=forking
+Type=simple
 PIDFile=/home/git/gitlab/tmp/pids/server.pid
+ExecStartPre=/usr/bin/rm /home/git/gitlab/tmp/pids/server.pid
 ExecStart=/usr/bin/bundle exec rails s -e production
 User=git
 WorkingDirectory=/home/git/gitlab
