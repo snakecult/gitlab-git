@@ -15,6 +15,8 @@ post_upgrade() {
 	rm /home/git/gitlab/vendor/bundle/ruby/1.9.1/specifications/charlock_holmes-0.6.9.gemspec
 	cd /home/git/gitlab
 	sudo bundle install --without development test --deployment
+	systemctl reload sidekiq
+	systemctl reload gitlab
 }
 
 # vim:set ts=2 sw=2 et:
