@@ -3,10 +3,10 @@ pkgname=gitlab-git
 pkgver=5.0.0
 pkgrel=6
 pkgdesc="Self hosted Git management software"
-arch=(i686 x86_64)
+arch=(x86_64)
 url="http://gitlab.org"
 license=('MIT')
-
+install='gitlab.install'
 depends=(
 	'ruby-bundler'
 	'gitlab-shell'
@@ -23,6 +23,8 @@ optdepends=(
 	'postgres'
 	'mysql'
 )
+
+provides=('gitlab')
 
 backup=(
 	'etc/gitlab/gitlab.yml'
@@ -53,6 +55,7 @@ package() {
 	cp -rT "$srcdir/gitlab" "$pkgdir/$_homedir"
 	#    rm -rf "$pkgdir/$_homedir/.git"
 	rm  "$pkgdir/$_homedir/.gitignore"
+	chmod 750 "$pkgdir/$_homedir"
 	chown -R git:git "$pkgdir/$_homedir"
 
 	#config
