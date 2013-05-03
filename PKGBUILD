@@ -1,7 +1,7 @@
 # Maintainer: David Andersen <arch@davidandersen.us>
 pkgname=gitlab-git
 pkgver=5.0.0
-pkgrel=4
+pkgrel=6
 pkgdesc="Gitorious aims to provide a great way of doing distributed opensource code collaboration (git version)"
 arch=(i686 x86_64)
 url="http://gitorious.org/gitorious"
@@ -31,7 +31,7 @@ _branch=5-0-stable
 build() {
 	if [ ! -d "gitlab" ] 
 	then
-		git clone https://github.com/gitlabhq/gitlabhq.git gitlab --depth=1 -b "${_branch}"
+		git clone -b $_branch https://github.com/gitlabhq/gitlabhq.git gitlab
 	fi
 	cd gitlab
 	bundle install --without development test --deployment
@@ -46,7 +46,7 @@ package() {
     mkdir -p "$pkgdir/$_homedir/tmp/pids"
     mkdir -p "$pkgdir/$_homedir/tmp/sockets"
     cp -rT "$srcdir/gitlab" "$pkgdir/$_homedir"
-    rm -rf "$pkgdir/$_homedir/.git"
+#    rm -rf "$pkgdir/$_homedir/.git"
     rm  "$pkgdir/$_homedir/.gitignore"
     chown -R git:git "$pkgdir/$_homedir"
 

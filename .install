@@ -6,4 +6,15 @@ post_install() {
 	cd /home/git/gitlab
 	sudo bundle install --without development test --deployment
 }
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+post_upgrade() {
+ 	echo Updating charlock_holmes gem...
+        rm -rf /home/git/gitlab/vendor/bundle/ruby/1.9.1/gems/charlock_holmes-0.6.9
+        rm /home/git/gitlab/vendor/bundle/ruby/1.9.1/specifications/charlock_holmes-0.6.9.gemspec
+        cd /home/git/gitlab
+        sudo bundle install --without development test --deployment
+}
+
 # vim:set ts=2 sw=2 et:
